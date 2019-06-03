@@ -59,6 +59,7 @@ export default class Url extends Component {
 								type="text"
 								class="form-control"
 								value={value}
+								onBlur={e => onChange({ Id: data.Id, [id]: e.target.value })}
 								onChange={e => onChangeText(index, id, e.target.value)}
 								onKeyDown={e => {
 									if (e.key === 'Enter') {
@@ -166,6 +167,7 @@ export default class Url extends Component {
 							type="text"
 							class="form-control"
 							value={value}
+							onBlur={e => onChange({ Id: data.Id, [id]: e.target.value })}
 							onChange={e => onChangeText(index, id, e.target.value)}
 							onKeyDown={e => {
 								if (e.key === 'Enter') {

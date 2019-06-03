@@ -1,6 +1,6 @@
 {
 	"name": "@volenday/column-url",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"private": false,
 	"license": "MIT",
 	"author": "Jerome Miranda <jerome.m.miranda@gmail.com>",
@@ -12,7 +12,7 @@
 	"dependencies": {
 		"@volenday/encode": "~0.0.2",
 		"@volenday/generate-thumbnail": "~0.0.4",
-		"evergreen-ui": "~4.16.0",
+		"evergreen-ui": "~4.17.0",
 		"react": "~16.8.6",
 		"react-dom": "~16.8.6",
 		"react-player": "~1.11.0"
