@@ -68,16 +68,18 @@ export default class Url extends Component {
 									return;
 								}}
 							/>
-							<span class="input-group-addon">
-								<a
-									href={value}
-									onClick={e => {
-										e.preventDefault();
-										this.setState({ visible: true });
-									}}>
-									<i class="fa fa-link" aria-hidden="true" />
-								</a>
-							</span>
+							<div class="input-group-append">
+								<span class="input-group-text">
+									<a
+										href={value}
+										onClick={e => {
+											e.preventDefault();
+											this.setState({ visible: true });
+										}}>
+										<i class="fa fa-link" aria-hidden="true" />
+									</a>
+								</span>
+							</div>
 						</div>
 					) : (
 						<a
@@ -176,11 +178,13 @@ export default class Url extends Component {
 								return;
 							}}
 						/>
-						<span class="input-group-addon">
-							<a href={value} target="_blank">
-								<i class="fa fa-link" aria-hidden="true" />
-							</a>
-						</span>
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<a href={value} target="_blank">
+									<i class="fa fa-link" aria-hidden="true" />
+								</a>
+							</span>
+						</div>
 					</div>
 				) : (
 					<a href={value} target="_blank">
