@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Dialog } from 'evergreen-ui';
 import ReactPlayer from 'react-player';
 import GenerateThumbnail from '@volenday/generate-thumbnail';
 import Encode from '@volenday/encode';
+import Modal from 'antd/es/modal/Modal';
+
+import 'antd/es/modal/style/css';
 
 const getValue = (fields, data) => {
 	fields = fields.split('.');
@@ -93,15 +95,13 @@ export default class Url extends Component {
 					)}
 
 					{visible && (
-						<Dialog
-							hasFooter={false}
-							hasHeader={false}
-							isShown={visible}
-							minHeightContent={'calc(100vh - 10vmin - 10vmin)'}
-							onCloseComplete={() => this.setState({ visible: false })}
-							preventBodyScrolling={true}
-							topOffset="10vmin"
-							height="100%"
+						<Modal
+							centered
+							footer={null}
+							title={value}
+							visible={visible}
+							onOk={() => this.setState({ visible: false })}
+							onCancel={() => this.setState({ visible: false })}
 							width="80vw">
 							<div class="row">
 								<div class="col-md-9 col-sm-9 col-xs-12">
@@ -129,25 +129,25 @@ export default class Url extends Component {
 										<div class="btn-group" role="group">
 											<button
 												type="button"
-												class="btn btn-default"
+												class={`btn ${playbackRate == 0.5 ? 'btn-primary' : 'btn-default'}`}
 												onClick={() => this.setState({ playbackRate: 0.5 })}>
 												0.5
 											</button>
 											<button
 												type="button"
-												class="btn btn-default"
+												class={`btn ${playbackRate == 1 ? 'btn-primary' : 'btn-default'}`}
 												onClick={() => this.setState({ playbackRate: 1 })}>
 												1
 											</button>
 											<button
 												type="button"
-												class="btn btn-default"
+												class={`btn ${playbackRate == 1.5 ? 'btn-primary' : 'btn-default'}`}
 												onClick={() => this.setState({ playbackRate: 1.5 })}>
 												1.5
 											</button>
 											<button
 												type="button"
-												class="btn btn-default"
+												class={`btn ${playbackRate == 2 ? 'btn-primary' : 'btn-default'}`}
 												onClick={() => this.setState({ playbackRate: 2 })}>
 												2
 											</button>
@@ -155,7 +155,7 @@ export default class Url extends Component {
 									</div>
 								</div>
 							</div>
-						</Dialog>
+						</Modal>
 					)}
 				</Fragment>
 			);
