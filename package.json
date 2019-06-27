@@ -1,6 +1,6 @@
 {
 	"name": "@volenday/column-url",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"private": false,
 	"license": "MIT",
 	"author": "Jerome Miranda <jerome.m.miranda@gmail.com>",
@@ -20,7 +20,7 @@
 	},
 	"dependencies": {
 		"@volenday/encode": "~0.0.2",
-		"@volenday/generate-thumbnail": "~0.0.5",
+		"@volenday/generate-thumbnail": "~0.0.6",
 		"antd": "~3.19.8",
 		"react": "~16.8.6",
 		"react-dom": "~16.8.6",
