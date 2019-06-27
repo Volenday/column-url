@@ -61,5 +61,13 @@ module.exports = {
 				NODE_ENV: JSON.stringify('production')
 			}
 		})
-	]
+	],
+	externals: {
+		'@volenday/encode': 'commonjs2 @volenday/encode',
+		'@volenday/generate-thumbnail': 'commonjs2 @volenday/generate-thumbnail',
+		antd: 'commonjs2 antd',
+		react: 'commonjs2 react',
+		'react-dom': 'commonjs2 react-dom',
+		'react-player': 'commonjs2 react-player'
+	}
 };

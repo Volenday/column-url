@@ -5,17 +5,27 @@
 	"license": "MIT",
 	"author": "Jerome Miranda <jerome.m.miranda@gmail.com>",
 	"scripts": {
+		"dev": "webpack --progress --watch",
 		"build": "webpack --progress -p",
 		"prepublishOnly": "webpack --progress -p"
 	},
 	"main": "dist/index.min.js",
-	"dependencies": {
+	"peerDependencies": {
 		"@volenday/encode": "~0.0.2",
 		"@volenday/generate-thumbnail": "~0.0.5",
 		"antd": "~3.19.8",
 		"react": "~16.8.6",
 		"react-dom": "~16.8.6",
 		"react-player": "~1.11.1"
+	},
+	"dependencies": {
+		"@volenday/encode": "~0.0.2",
+		"@volenday/generate-thumbnail": "~0.0.5",
+		"antd": "~3.19.8",
+		"react": "~16.8.6",
+		"react-dom": "~16.8.6",
+		"react-player": "~1.11.1",
+		"webpack": "~4.34.0"
 	},
 	"devDependencies": {
 		"@babel/core": "~7.4.5",
