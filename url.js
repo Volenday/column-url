@@ -70,18 +70,17 @@ export default class Url extends Component {
 									return;
 								}}
 							/>
-							<div class="input-group-append">
+							<a
+								class="input-group-append"
+								href={value}
+								onClick={e => {
+									e.preventDefault();
+									this.setState({ visible: true });
+								}}>
 								<span class="input-group-text">
-									<a
-										href={value}
-										onClick={e => {
-											e.preventDefault();
-											this.setState({ visible: true });
-										}}>
-										<i class="fa fa-link" aria-hidden="true" />
-									</a>
+									<i class="fa fa-link" aria-hidden="true" />
 								</span>
-							</div>
+							</a>
 						</div>
 					) : (
 						<a
