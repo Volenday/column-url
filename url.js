@@ -41,7 +41,7 @@ export default class Url extends Component {
 		const fileValue = GenerateThumbnail(value);
 
 		if (fileValue.type == 'video') {
-			const streamUrl = 'https://api.aha.volenday.com/api/stream';
+			const streamUrl = 'https://streamer.aha.volenday.com/';
 			let videoUrl = value;
 			if (username != '' && password != '') {
 				videoUrl = `${streamUrl}?url=${encodeURIComponent(value)}&username=${Encode(
