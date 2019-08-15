@@ -66,6 +66,7 @@ export default class Url extends Component {
 								onKeyDown={e => {
 									if (e.key === 'Enter') {
 										onChange({ Id: data.Id, [id]: e.target.value });
+										e.target.blur();
 									}
 									return;
 								}}
@@ -173,6 +174,7 @@ export default class Url extends Component {
 							onKeyDown={e => {
 								if (e.key === 'Enter') {
 									onChange({ Id: data.Id, [id]: e.target.value });
+									e.target.blur();
 								}
 								return;
 							}}
