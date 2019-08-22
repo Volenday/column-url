@@ -1,6 +1,6 @@
 {
 	"name": "@volenday/column-url",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"private": false,
 	"license": "MIT",
 	"author": "Jerome Miranda <jerome.m.miranda@gmail.com>",
@@ -12,19 +12,21 @@
 	"main": "dist/index.min.js",
 	"peerDependencies": {
 		"@volenday/encode": "~0.0.2",
-		"@volenday/generate-thumbnail": "~0.0.6",
-		"antd": "~3.20.0",
-		"react": "~16.8.6",
-		"react-dom": "~16.8.6",
-		"react-player": "~1.11.1"
+		"@volenday/generate-thumbnail": "~0.1.0",
+		"antd": "~3.22.0",
+		"mine": "~0.1.0",
+		"react": "~16.9.0",
+		"react-dom": "~16.9.0",
+		"react-player": "~1.12.0"
 	},
 	"dependencies": {
 		"@volenday/encode": "~0.0.2",
-		"@volenday/generate-thumbnail": "~0.0.6",
-		"antd": "~3.21.4",
+		"@volenday/generate-thumbnail": "~0.1.0",
+		"antd": "~3.22.0",
+		"mine": "~0.1.0",
 		"react": "~16.9.0",
 		"react-dom": "~16.9.0",
-		"react-player": "~1.11.2",
+		"react-player": "~1.12.0",
 		"webpack": "~4.39.2"
 	},
 	"devDependencies": {
@@ -55,8 +57,8 @@
 		"css-loader": "~3.2.0",
 		"file-loader": "~4.2.0",
 		"node-sass": "~4.12.0",
-		"sass-loader": "~7.2.0",
+		"sass-loader": "~7.3.1",
 		"style-loader": "~1.0.0",
-		"webpack-cli": "~3.3.6"
+		"webpack-cli": "~3.3.7"
 	}
 }
