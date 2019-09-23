@@ -64,7 +64,9 @@ module.exports = {
 	externals: {
 		'@volenday/encode': 'commonjs2 @volenday/encode',
 		'@volenday/generate-thumbnail': 'commonjs2 @volenday/generate-thumbnail',
+		'@volenday/input-url': 'commonjs2 @volenday/input-url',
 		antd: 'commonjs2 antd',
+		formik: 'commonjs2 formik',
 		react: 'commonjs2 react',
 		'react-dom': 'commonjs2 react-dom',
 		'react-player': 'commonjs2 react-player'

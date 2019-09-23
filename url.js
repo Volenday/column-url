@@ -2,8 +2,11 @@ import React, { Component, Fragment } from 'react';
 import ReactPlayer from 'react-player';
 import GenerateThumbnail from '@volenday/generate-thumbnail';
 import Encode from '@volenday/encode';
-import Modal from 'antd/es/modal/Modal';
+import InputUrl from '@volenday/input-url';
+import { Formik } from 'formik';
 
+import { Button, Modal } from 'antd';
+import 'antd/es/button/style/css';
 import 'antd/es/modal/style/css';
 
 const getValue = (fields, data) => {
@@ -35,7 +38,7 @@ export default class Url extends Component {
 
 	render() {
 		const { playbackRate, visible } = this.state;
-		const { authentication, editable, data, id, index, onChange, onChangeText, value } = this.props;
+		const { authentication, editable, data, id, onChange, value } = this.props;
 		const { username = '', password = '', usernameField = '', passwordField = '' } = authentication;
 
 		const fileValue = GenerateThumbnail(value);
@@ -56,33 +59,31 @@ export default class Url extends Component {
 			return (
 				<Fragment>
 					{editable ? (
-						<div class="input-group" style={{ width: '100%' }}>
-							<input
-								type="text"
-								class="form-control"
-								value={value}
-								onBlur={e => onChange({ Id: data.Id, [id]: e.target.value })}
-								onChange={e => onChangeText(index, id, e.target.value)}
-								onKeyDown={e => {
-									if (e.key === 'Enter') {
-										onChange({ Id: data.Id, [id]: e.target.value });
-										e.target.blur();
-									}
-									return;
-								}}
-							/>
-							<a
-								class="input-group-append"
-								href={value}
-								onClick={e => {
-									e.preventDefault();
-									this.setState({ visible: true });
-								}}>
-								<span class="input-group-text">
-									<i class="fa fa-link" aria-hidden="true" />
-								</span>
-							</a>
-						</div>
+						<Formik
+							initialValues={{ [id]: value }}
+							onSubmit={values => onChange({ ...values, Id: data.Id })}
+							validateOnBlur={false}
+							validateOnChange={false}
+							render={({ handleChange, submitForm, values }) => (
+								<Fragment>
+									<InputUrl
+										id={id}
+										onBlur={submitForm}
+										onChange={handleChange}
+										onPressEnter={e => {
+											submitForm(e);
+											e.target.blur();
+										}}
+										styles={{ minWidth: '90%', width: '90%' }}
+										withLabel={false}
+										value={values[id]}
+									/>
+									<Button style={{ width: '10%' }} onClick={() => this.setState({ visible: true })}>
+										<i style={{ marginLeft: '-5px' }} class="fas fa-link"></i>
+									</Button>
+								</Fragment>
+							)}
+						/>
 					) : (
 						<a
 							href={value}
@@ -161,38 +162,40 @@ export default class Url extends Component {
 			);
 		}
 
-		return (
-			<Fragment>
-				{editable ? (
-					<div class="input-group" style={{ width: '100%' }}>
-						<input
-							type="text"
-							class="form-control"
-							value={value}
-							onBlur={e => onChange({ Id: data.Id, [id]: e.target.value })}
-							onChange={e => onChangeText(index, id, e.target.value)}
-							onKeyDown={e => {
-								if (e.key === 'Enter') {
-									onChange({ Id: data.Id, [id]: e.target.value });
+		if (editable) {
+			return (
+				<Formik
+					initialValues={{ [id]: value }}
+					onSubmit={values => onChange({ ...values, Id: data.Id })}
+					validateOnBlur={false}
+					validateOnChange={false}
+					render={({ handleChange, submitForm, values }) => (
+						<Fragment>
+							<InputUrl
+								id={id}
+								onBlur={submitForm}
+								onChange={handleChange}
+								onPressEnter={e => {
+									submitForm(e);
 									e.target.blur();
-								}
-								return;
-							}}
-						/>
-						<div class="input-group-append">
-							<span class="input-group-text">
-								<a href={value} target="_blank">
-									<i class="fa fa-link" aria-hidden="true" />
-								</a>
-							</span>
-						</div>
-					</div>
-				) : (
-					<a href={value} target="_blank">
-						{value}
-					</a>
-				)}
-			</Fragment>
+								}}
+								styles={{ minWidth: '90%', width: '90%' }}
+								withLabel={false}
+								value={values[id]}
+							/>
+							<Button href={values[id]} style={{ width: '10%' }} target="_blank">
+								<i style={{ marginLeft: '-5px' }} class="fas fa-link"></i>
+							</Button>
+						</Fragment>
+					)}
+				/>
+			);
+		}
+
+		return (
+			<a href={value} target="_blank">
+				{value}
+			</a>
 		);
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"name": "@volenday/column-url",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"private": false,
 	"license": "MIT",
 	"author": "Jerome Miranda <jerome.m.miranda@gmail.com>",
@@ -13,27 +13,31 @@
 	"peerDependencies": {
 		"@volenday/encode": "~0.0.2",
 		"@volenday/generate-thumbnail": "~0.1.0",
-		"antd": "~3.22.0",
+		"@volenday/input-url": "~0.1.12",
+		"antd": "~3.23.4",
+		"formik": "~1.5.8",
 		"mine": "~0.1.0",
 		"react": "~16.9.0",
 		"react-dom": "~16.9.0",
-		"react-player": "~1.12.0"
+		"react-player": "~1.13.0"
 	},
 	"dependencies": {
 		"@volenday/encode": "~0.0.2",
 		"@volenday/generate-thumbnail": "~0.1.0",
-		"antd": "~3.22.0",
+		"@volenday/input-url": "~0.1.12",
+		"antd": "~3.23.4",
+		"formik": "~1.5.8",
 		"mine": "~0.1.0",
 		"react": "~16.9.0",
 		"react-dom": "~16.9.0",
-		"react-player": "~1.12.0",
-		"webpack": "~4.39.2"
+		"react-player": "~1.13.0",
+		"webpack": "~4.40.2"
 	},
 	"devDependencies": {
-		"@babel/core": "~7.5.5",
+		"@babel/core": "~7.6.0",
 		"@babel/plugin-proposal-class-properties": "~7.5.5",
-		"@babel/plugin-proposal-decorators": "~7.4.4",
-		"@babel/plugin-proposal-do-expressions": "~7.5.0",
+		"@babel/plugin-proposal-decorators": "~7.6.0",
+		"@babel/plugin-proposal-do-expressions": "~7.6.0",
 		"@babel/plugin-proposal-export-default-from": "~7.5.2",
 		"@babel/plugin-proposal-export-namespace-from": "~7.5.2",
 		"@babel/plugin-proposal-function-bind": "~7.2.0",
@@ -42,23 +46,23 @@
 		"@babel/plugin-proposal-logical-assignment-operators": "~7.2.0",
 		"@babel/plugin-proposal-nullish-coalescing-operator": "~7.4.4",
 		"@babel/plugin-proposal-numeric-separator": "~7.2.0",
-		"@babel/plugin-proposal-optional-chaining": "~7.2.0",
+		"@babel/plugin-proposal-optional-chaining": "~7.6.0",
 		"@babel/plugin-proposal-pipeline-operator": "~7.5.0",
 		"@babel/plugin-proposal-throw-expressions": "~7.2.0",
 		"@babel/plugin-syntax-dynamic-import": "~7.2.0",
 		"@babel/plugin-syntax-import-meta": "~7.2.0",
 		"@babel/plugin-transform-async-to-generator": "~7.5.0",
-		"@babel/preset-env": "~7.5.5",
+		"@babel/preset-env": "~7.6.0",
 		"@babel/preset-react": "^7.0.0",
-		"@babel/runtime": "~7.5.5",
+		"@babel/runtime": "~7.6.0",
 		"babel-loader": "~8.0.6",
 		"babel-plugin-react-html-attrs": "^2.1.0",
 		"core-js": "~3.2.1",
 		"css-loader": "~3.2.0",
 		"file-loader": "~4.2.0",
 		"node-sass": "~4.12.0",
-		"sass-loader": "~7.3.1",
+		"sass-loader": "~8.0.0",
 		"style-loader": "~1.0.0",
-		"webpack-cli": "~3.3.7"
+		"webpack-cli": "~3.3.9"
 	}
 }
