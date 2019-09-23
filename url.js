@@ -38,7 +38,7 @@ export default class Url extends Component {
 
 	render() {
 		const { playbackRate, visible } = this.state;
-		const { authentication, editable, data, id, onChange, value } = this.props;
+		const { authentication, editable, data, id, multiple = false, onChange, value } = this.props;
 		const { username = '', password = '', usernameField = '', passwordField = '' } = authentication;
 
 		const fileValue = GenerateThumbnail(value);
@@ -58,7 +58,7 @@ export default class Url extends Component {
 
 			return (
 				<Fragment>
-					{editable ? (
+					{editable && !multiple && (
 						<Formik
 							initialValues={{ [id]: value }}
 							onSubmit={values => onChange({ ...values, Id: data.Id })}
@@ -84,7 +84,19 @@ export default class Url extends Component {
 								</Fragment>
 							)}
 						/>
-					) : (
+					)}
+
+					{!editable && multiple && (
+						<Fragment>
+							{value.split(',').map((d, i) => (
+								<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
+									{d}
+								</a>
+							))}
+						</Fragment>
+					)}
+
+					{!editable && !multiple && (
 						<a
 							href={value}
 							onClick={e => {
@@ -162,7 +174,7 @@ export default class Url extends Component {
 			);
 		}
 
-		if (editable) {
+		if (editable && !multiple) {
 			return (
 				<Formik
 					initialValues={{ [id]: value }}
@@ -189,6 +201,18 @@ export default class Url extends Component {
 						</Fragment>
 					)}
 				/>
+			);
+		}
+
+		if (multiple) {
+			return (
+				<Fragment>
+					{value.split(',').map(d => (
+						<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
+							{d}
+						</a>
+					))}
+				</Fragment>
 			);
 		}
 

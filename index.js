@@ -13,6 +13,7 @@ export default props => {
 		editable = false,
 		headerStyle = {},
 		id,
+		multiple = false,
 		onChange,
 		onChangeText,
 		style = {},
@@ -22,10 +23,10 @@ export default props => {
 	return {
 		...defaultProps,
 		filterable: false,
-		style: { ...style, display: 'flex', alignItems: 'center' },
+		style: { ...style, display: multiple ? 'block' : 'flex', alignItems: 'center' },
 		headerStyle: { ...headerStyle, display: 'flex', alignItems: 'center' },
 		Cell: ({ index, original, value }) => (
-			<Url {...props} authentication={authentication} data={original} index={index} value={value} />
+			<Url {...props} authentication={authentication} data={original} multiple={multiple} value={value} />
 		)
 	};
 };
