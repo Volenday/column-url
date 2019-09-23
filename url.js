@@ -207,11 +207,13 @@ export default class Url extends Component {
 		if (multiple) {
 			return (
 				<Fragment>
-					{value.split(',').map(d => (
-						<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
-							{d}
-						</a>
-					))}
+					{value && value.length
+						? value.split(',').map((d, i) => (
+								<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
+									{d}
+								</a>
+						  ))
+						: ''}
 				</Fragment>
 			);
 		}
