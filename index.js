@@ -25,8 +25,10 @@ export default props => {
 		filterable: false,
 		style: { ...style, display: multiple ? 'block' : 'flex', alignItems: 'center' },
 		headerStyle: { ...headerStyle, display: 'flex', alignItems: 'center' },
-		Cell: ({ index, original, value }) => (
-			<Url {...props} authentication={authentication} data={original} multiple={multiple} value={value} />
-		)
+		Cell: ({ original, value }) => {
+			if (typeof value == 'undefined') return null;
+
+			return <Url {...props} authentication={authentication} data={original} multiple={multiple} value={value} />;
+		}
 	};
 };

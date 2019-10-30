@@ -63,8 +63,8 @@ export default class Url extends Component {
 							initialValues={{ [id]: value }}
 							onSubmit={values => onChange({ ...values, Id: data.Id })}
 							validateOnBlur={false}
-							validateOnChange={false}
-							render={({ handleChange, submitForm, values }) => (
+							validateOnChange={false}>
+							{({ handleChange, submitForm, values }) => (
 								<Fragment>
 									<InputUrl
 										id={id}
@@ -83,7 +83,7 @@ export default class Url extends Component {
 									</Button>
 								</Fragment>
 							)}
-						/>
+						</Formik>
 					)}
 
 					{!editable && multiple && (
@@ -180,8 +180,8 @@ export default class Url extends Component {
 					initialValues={{ [id]: value }}
 					onSubmit={values => onChange({ ...values, Id: data.Id })}
 					validateOnBlur={false}
-					validateOnChange={false}
-					render={({ handleChange, submitForm, values }) => (
+					validateOnChange={false}>
+					{({ handleChange, submitForm, values }) => (
 						<Fragment>
 							<InputUrl
 								id={id}
@@ -200,7 +200,7 @@ export default class Url extends Component {
 							</Button>
 						</Fragment>
 					)}
-				/>
+				</Formik>
 			);
 		}
 
