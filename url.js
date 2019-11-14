@@ -1,13 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import GenerateThumbnail from '@volenday/generate-thumbnail';
 import Encode from '@volenday/encode';
 import InputUrl from '@volenday/input-url';
 import { Formik } from 'formik';
-
 import { Button, Modal } from 'antd';
-import 'antd/es/button/style/css';
-import 'antd/es/modal/style/css';
 
 const getValue = (fields, data) => {
 	fields = fields.split('.');
@@ -57,7 +54,7 @@ export default class Url extends Component {
 			}
 
 			return (
-				<Fragment>
+				<>
 					{editable && !multiple && (
 						<Formik
 							initialValues={{ [id]: value }}
@@ -65,7 +62,7 @@ export default class Url extends Component {
 							validateOnBlur={false}
 							validateOnChange={false}>
 							{({ handleChange, submitForm, values }) => (
-								<Fragment>
+								<>
 									<InputUrl
 										id={id}
 										onBlur={submitForm}
@@ -81,19 +78,19 @@ export default class Url extends Component {
 									<Button style={{ width: '10%' }} onClick={() => this.setState({ visible: true })}>
 										<i style={{ marginLeft: '-5px' }} class="fas fa-link"></i>
 									</Button>
-								</Fragment>
+								</>
 							)}
 						</Formik>
 					)}
 
 					{!editable && multiple && (
-						<Fragment>
+						<>
 							{value.split(',').map((d, i) => (
 								<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
 									{d}
 								</a>
 							))}
-						</Fragment>
+						</>
 					)}
 
 					{!editable && !multiple && (
@@ -170,7 +167,7 @@ export default class Url extends Component {
 							</div>
 						</Modal>
 					)}
-				</Fragment>
+				</>
 			);
 		}
 
@@ -182,7 +179,7 @@ export default class Url extends Component {
 					validateOnBlur={false}
 					validateOnChange={false}>
 					{({ handleChange, submitForm, values }) => (
-						<Fragment>
+						<>
 							<InputUrl
 								id={id}
 								onBlur={submitForm}
@@ -198,24 +195,20 @@ export default class Url extends Component {
 							<Button href={values[id]} style={{ width: '10%' }} target="_blank">
 								<i style={{ marginLeft: '-5px' }} class="fas fa-link"></i>
 							</Button>
-						</Fragment>
+						</>
 					)}
 				</Formik>
 			);
 		}
 
 		if (multiple) {
-			return (
-				<Fragment>
-					{value && value.length
-						? value.split(',').map((d, i) => (
-								<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
-									{d}
-								</a>
-						  ))
-						: ''}
-				</Fragment>
-			);
+			return value && value.length
+				? value.split(',').map((d, i) => (
+						<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
+							{d}
+						</a>
+				  ))
+				: '';
 		}
 
 		return (

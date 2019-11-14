@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
 	mode: 'production',
@@ -52,6 +53,16 @@ module.exports = {
 		chunkFilename: '[name].[chunkhash].chunk.min.js',
 		libraryTarget: 'commonjs2'
 	},
+	externals: {
+		'@volenday/encode': '@volenday/encode',
+		'@volenday/generate-thumbnail': '@volenday/generate-thumbnail',
+		'@volenday/input-url': '@volenday/input-url',
+		antd: 'antd',
+		formik: 'formik',
+		react: 'react',
+		'react-dom': 'react-dom',
+		'react-player': 'react-player'
+	},
 	plugins: [
 		new webpack.optimize.AggressiveMergingPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
@@ -59,16 +70,13 @@ module.exports = {
 			'process.env': {
 				NODE_ENV: JSON.stringify('production')
 			}
+		}),
+		new CompressionPlugin({
+			filename: '[path].gz[query]',
+			algorithm: 'gzip',
+			test: /\.js$|\.css$|\.html$/,
+			threshold: 10240,
+			minRatio: 0.7
 		})
-	],
-	externals: {
-		'@volenday/encode': 'commonjs2 @volenday/encode',
-		'@volenday/generate-thumbnail': 'commonjs2 @volenday/generate-thumbnail',
-		'@volenday/input-url': 'commonjs2 @volenday/input-url',
-		antd: 'commonjs2 antd',
-		formik: 'commonjs2 formik',
-		react: 'commonjs2 react',
-		'react-dom': 'commonjs2 react-dom',
-		'react-player': 'commonjs2 react-player'
-	}
+	]
 };
