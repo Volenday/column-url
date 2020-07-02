@@ -59,6 +59,7 @@ module.exports = {
 		'@volenday/input-url': '@volenday/input-url',
 		antd: 'antd',
 		formik: 'formik',
+		mine: 'mine',
 		react: 'react',
 		'react-dom': 'react-dom',
 		'react-player': 'react-player'
