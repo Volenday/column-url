@@ -13,58 +13,47 @@ export default props => {
 			passwordField: null
 		},
 		editable = false,
-		filterable,
-		headerStyle = {},
 		id,
 		multiple = false,
 		onChange,
-		onChangeText,
-		style = {},
 		...defaultProps
 	} = props;
 
 	return {
 		...defaultProps,
-		filterable,
-		style: { ...style, display: multiple ? 'block' : 'flex', alignItems: 'center' },
-		headerStyle: { ...headerStyle, display: 'flex', alignItems: 'center' },
-		Cell: ({ original, value }) => {
-			if (typeof value == 'undefined') return null;
+		Cell: ({ row, value }) => {
+			if (typeof value === 'undefined') return null;
 
-			return <Url {...props} authentication={authentication} data={original} multiple={multiple} value={value} />;
+			return <Url {...props} authentication={authentication} data={row} multiple={multiple} value={value} />;
 		},
-		Filter: ({ filter, onChange }) => {
+		Filter: ({ column: { filterValue, setFilter } }) => {
 			let timeout = null;
 
 			return (
 				<Formik
 					enableReinitialize={true}
-					initialValues={{ filter: filter ? filter.value : '' }}
-					onSubmit={values => onChange(values.filter === '' ? values.filter : new RegExp(values.filter))}
+					initialValues={{ filter: filterValue ? filterValue : '' }}
+					onSubmit={values => setFilter(values.filter === '' ? values.filter : new RegExp(values.filter))}
 					validateOnBlur={false}
 					validateOnChange={false}>
-					{({ handleChange, submitForm, values }) => {
-						return (
-							<InputUrl
-								id="filter"
-								onChange={e => {
-									handleChange(e);
-									if (values.filter != '' && e.target.value == '') {
-										submitForm(e);
-									} else {
-										timeout && clearTimeout(timeout);
-										timeout = setTimeout(() => submitForm(e), 300);
-									}
-								}}
-								onPressEnter={submitForm}
-								placeholder="Search..."
-								withLabel={false}
-								value={
-									typeof values.filter.source !== 'undefined' ? values.filter.source : values.filter
+					{({ handleChange, submitForm, values }) => (
+						<InputUrl
+							id="filter"
+							onChange={e => {
+								handleChange(e);
+								if (values.filter != '' && e.target.value == '') {
+									submitForm(e);
+								} else {
+									timeout && clearTimeout(timeout);
+									timeout = setTimeout(() => submitForm(e), 300);
 								}
-							/>
-						);
-					}}
+							}}
+							onPressEnter={submitForm}
+							placeholder="Search..."
+							withLabel={false}
+							value={typeof values.filter.source !== 'undefined' ? values.filter.source : values.filter}
+						/>
+					)}
 				</Formik>
 			);
 		}
