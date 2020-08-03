@@ -21,10 +21,10 @@ export default props => {
 
 	return {
 		...defaultProps,
-		Cell: ({ row, value }) => {
+		Cell: ({ row: { original }, value }) => {
 			if (typeof value === 'undefined') return null;
 
-			return <Url {...props} authentication={authentication} data={row} multiple={multiple} value={value} />;
+			return <Url {...props} authentication={authentication} data={original} multiple={multiple} value={value} />;
 		},
 		Filter: ({ column: { filterValue, setFilter } }) => {
 			let timeout = null;
