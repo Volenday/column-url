@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import GenerateThumbnail from '@volenday/generate-thumbnail';
 import Encode from '@volenday/encode';
 import InputUrl from '@volenday/input-url';
-import { Formik } from 'formik';
+import { Controller, useForm } from 'react-hook-form';
 import { Button, Modal } from 'antd';
 
 const getValue = (fields, data) => {
@@ -27,16 +27,21 @@ const getValue = (fields, data) => {
 	}
 };
 
-export default class Url extends Component {
-	state = {
-		playbackRate: 1,
-		visible: false
-	};
+const Url = memo(
+	({ other: { authentication, editable, id, multiple = false, onChange, styles }, row: { original }, value }) => {
+		if (typeof value === 'undefined') return null;
 
-	render() {
-		const { playbackRate, visible } = this.state;
-		const { authentication, editable, data, id, multiple = false, onChange, value } = this.props;
-		const { username = '', password = '', usernameField = '', passwordField = '' } = authentication;
+		const [playbackRate, setPlayBackRate] = useState(1);
+		const [visible, setVisible] = useState(false);
+
+		const { control, handleSubmit } = useForm({ defaultValues: { [id]: value } });
+
+		const formRef = useRef();
+
+		const submit = data => onChange({ ...data, Id: data.Id });
+
+		const { password = '', passwordField = '', username = '', usernameField = '' } = authentication;
+		const originalValue = value;
 
 		const fileValue = GenerateThumbnail(value);
 
@@ -49,38 +54,35 @@ export default class Url extends Component {
 				)}&password=${Encode(password)}`;
 			} else if (usernameField && passwordField) {
 				videoUrl = `${streamUrl}?url=${encodeURIComponent(value)}&username=${Encode(
-					getValue(usernameField, data)
-				)}&password=${Encode(getValue(passwordField, data))}`;
+					getValue(usernameField, original)
+				)}&password=${Encode(getValue(passwordField, original))}`;
 			}
 
 			return (
 				<>
 					{editable && !multiple && (
-						<Formik
-							initialValues={{ [id]: value }}
-							onSubmit={values => onChange({ ...values, Id: data.Id })}
-							validateOnBlur={false}
-							validateOnChange={false}>
-							{({ handleChange, submitForm, values }) => (
-								<>
+						<form onSubmit={handleSubmit(submit)} ref={formRef} style={styles}>
+							<Controller
+								control={control}
+								name={id}
+								render={({ name, onChange, value }) => (
 									<InputUrl
-										id={id}
-										onBlur={submitForm}
-										onChange={handleChange}
-										onPressEnter={e => {
-											submitForm(e);
-											e.target.blur();
-										}}
-										styles={{ minWidth: '90%', width: '90%' }}
+										id={name}
+										onBlur={() =>
+											originalValue !== value &&
+											formRef.current.dispatchEvent(new Event('submit', { cancelable: true }))
+										}
+										onChange={e => onChange(e.target.value)}
+										onPressEnter={e => e.target.blur()}
+										value={value}
 										withLabel={false}
-										value={values[id]}
 									/>
-									<Button style={{ width: '10%' }} onClick={() => this.setState({ visible: true })}>
-										<i style={{ marginLeft: '-5px' }} class="fas fa-link"></i>
-									</Button>
-								</>
-							)}
-						</Formik>
+								)}
+							/>
+							<Button style={{ width: '10%' }} onClick={() => setVisible(true)}>
+								<i style={{ marginLeft: '-5px' }} class="fas fa-link"></i>
+							</Button>
+						</form>
 					)}
 
 					{!editable && multiple && (
@@ -98,7 +100,7 @@ export default class Url extends Component {
 							href={value}
 							onClick={e => {
 								e.preventDefault();
-								this.setState({ visible: true });
+								setVisible(true);
 							}}>
 							{value}
 						</a>
@@ -110,8 +112,8 @@ export default class Url extends Component {
 							footer={null}
 							title={value}
 							visible={visible}
-							onOk={() => this.setState({ visible: false })}
-							onCancel={() => this.setState({ visible: false })}
+							onOk={() => setVisible(false)}
+							onCancel={() => setVisible(false)}
 							width="80vw">
 							<div class="row">
 								<div class="col-md-9 col-sm-9 col-xs-12">
@@ -140,25 +142,25 @@ export default class Url extends Component {
 											<button
 												type="button"
 												class={`btn ${playbackRate == 0.5 ? 'btn-primary' : 'btn-default'}`}
-												onClick={() => this.setState({ playbackRate: 0.5 })}>
+												onClick={() => setPlayBackRate(0.5)}>
 												0.5
 											</button>
 											<button
 												type="button"
 												class={`btn ${playbackRate == 1 ? 'btn-primary' : 'btn-default'}`}
-												onClick={() => this.setState({ playbackRate: 1 })}>
+												onClick={() => setPlayBackRate(1)}>
 												1
 											</button>
 											<button
 												type="button"
 												class={`btn ${playbackRate == 1.5 ? 'btn-primary' : 'btn-default'}`}
-												onClick={() => this.setState({ playbackRate: 1.5 })}>
+												onClick={() => setPlayBackRate(1.5)}>
 												1.5
 											</button>
 											<button
 												type="button"
 												class={`btn ${playbackRate == 2 ? 'btn-primary' : 'btn-default'}`}
-												onClick={() => this.setState({ playbackRate: 2 })}>
+												onClick={() => setPlayBackRate(2)}>
 												2
 											</button>
 										</div>
@@ -170,51 +172,7 @@ export default class Url extends Component {
 				</>
 			);
 		}
-
-		if (editable && !multiple) {
-			return (
-				<Formik
-					initialValues={{ [id]: value }}
-					onSubmit={values => onChange({ ...values, Id: data.Id })}
-					validateOnBlur={false}
-					validateOnChange={false}>
-					{({ handleChange, submitForm, values }) => (
-						<>
-							<InputUrl
-								id={id}
-								onBlur={submitForm}
-								onChange={handleChange}
-								onPressEnter={e => {
-									submitForm(e);
-									e.target.blur();
-								}}
-								styles={{ minWidth: '90%', width: '90%' }}
-								withLabel={false}
-								value={values[id]}
-							/>
-							<Button href={values[id]} style={{ width: '10%' }} target="_blank">
-								<i style={{ marginLeft: '-5px' }} class="fas fa-link"></i>
-							</Button>
-						</>
-					)}
-				</Formik>
-			);
-		}
-
-		if (multiple) {
-			return value && value.length
-				? value.split(',').map((d, i) => (
-						<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
-							{d}
-						</a>
-				  ))
-				: '';
-		}
-
-		return (
-			<a href={value} target="_blank">
-				{value}
-			</a>
-		);
 	}
-}
+);
+
+export default Url;

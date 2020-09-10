@@ -1,6 +1,6 @@
 {
 	"name": "@volenday/column-url",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"private": false,
 	"license": "MIT",
 	"author": "Volenday <developers@volenday.com>",
@@ -15,11 +15,11 @@
 		"@volenday/generate-thumbnail": "^0.1.5",
 		"@volenday/input-url": "^2.0.0",
 		"antd": "^3.26.18",
-		"formik": "^2.0.6",
 		"mine": "~0.1.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"react-player": "^1.14.2"
+		"react-player": "^1.14.2",
+		"react-hook-form": "^6.7.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.10.5",

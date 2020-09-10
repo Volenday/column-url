@@ -1,61 +1,85 @@
-import React from 'react';
-import { Formik } from 'formik';
+import React, { memo, Suspense, useRef } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Skeleton } from 'antd';
 import InputUrl from '@volenday/input-url';
 
 import Url from './url';
 
-export default props => {
-	const {
-		authentication = {
-			username: '',
-			password: '',
-			usernameField: null,
-			passwordField: null
-		},
-		editable = false,
-		id,
-		multiple = false,
-		onChange,
-		...defaultProps
-	} = props;
-
+export default ({
+	authentication = {
+		username: '',
+		password: '',
+		usernameField: null,
+		passwordField: null
+	},
+	editable = false,
+	id,
+	multiple = false,
+	onChange,
+	...defaultProps
+}) => {
 	return {
 		...defaultProps,
-		Cell: ({ row: { original }, value }) => {
-			if (typeof value === 'undefined') return null;
-
-			return <Url {...props} authentication={authentication} data={original} multiple={multiple} value={value} />;
-		},
-		Filter: ({ column: { filterValue, setFilter } }) => {
-			let timeout = null;
-
-			return (
-				<Formik
-					enableReinitialize={true}
-					initialValues={{ filter: filterValue ? filterValue : '' }}
-					onSubmit={values => setFilter(values.filter === '' ? values.filter : new RegExp(values.filter))}
-					validateOnBlur={false}
-					validateOnChange={false}>
-					{({ handleChange, submitForm, values }) => (
-						<InputUrl
-							id="filter"
-							onChange={e => {
-								handleChange(e);
-								if (values.filter != '' && e.target.value == '') {
-									submitForm(e);
-								} else {
-									timeout && clearTimeout(timeout);
-									timeout = setTimeout(() => submitForm(e), 300);
-								}
-							}}
-							onPressEnter={submitForm}
-							placeholder="Search..."
-							withLabel={false}
-							value={typeof values.filter.source !== 'undefined' ? values.filter.source : values.filter}
-						/>
-					)}
-				</Formik>
-			);
-		}
+		Cell: props => (
+			<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
+				<Url
+					{...props}
+					other={{
+						authentication,
+						editable,
+						id,
+						multiple: false,
+						onChange,
+						styles: { minWidth: '90%', width: '90%' }
+					}}
+				/>
+			</Suspense>
+		),
+		Filter: props => (
+			<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
+				<Filter {...props} />
+			</Suspense>
+		)
 	};
 };
+
+const Filter = memo(({ column: { filterValue, setFilter } }) => {
+	const { control, handleSubmit } = useForm({ defaultValues: { filter: filterValue ? filterValue : '' } });
+
+	const submit = data => setFilter(data.filter);
+
+	const formRef = useRef();
+
+	let timeout = null;
+
+	return (
+		<form onSubmit={handleSubmit(submit)} ref={formRef}>
+			<Controller
+				control={control}
+				name="filter"
+				render={({ name, onChange, value }) => (
+					<InputUrl
+						id={name}
+						onChange={e => {
+							onChange(e.target.value);
+
+							if (value !== '' && e.target.value === '') {
+								formRef.current.dispatchEvent(new Event('submit', { cancelable: true }));
+							} else {
+								timeout && clearTimeout(timeout);
+								timeout = setTimeout(
+									() => formRef.current.dispatchEvent(new Event('submit', { cancelable: true })),
+									300
+								);
+							}
+						}}
+						onPressEnter={() => formRef.current.dispatchEvent(new Event('submit', { cancelable: true }))}
+						placeholder="Search..."
+						value={value}
+						withLabel={false}
+					/>
+				)}
+			/>
+		</form>
+	);
+});

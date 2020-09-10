@@ -58,11 +58,11 @@ module.exports = {
 		'@volenday/generate-thumbnail': '@volenday/generate-thumbnail',
 		'@volenday/input-url': '@volenday/input-url',
 		antd: 'antd',
-		formik: 'formik',
 		mine: 'mine',
 		react: 'react',
 		'react-dom': 'react-dom',
-		'react-player': 'react-player'
+		'react-player': 'react-player',
+		'react-hook-form': 'react-hook-form'
 	},
 	plugins: [
 		new webpack.optimize.AggressiveMergingPlugin(),
