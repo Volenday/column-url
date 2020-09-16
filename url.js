@@ -88,7 +88,7 @@ const Url = memo(
 					{!editable && multiple && (
 						<>
 							{value.split(',').map((d, i) => (
-								<a href={d} key={`${d}-${i}`} style={{ display: 'block' }} target="_blank">
+								<a href={d} key={`${d}-${i}`} rel="noopener noreferrer" style={{ display: 'block' }} target="_blank">
 									{d}
 								</a>
 							))}
