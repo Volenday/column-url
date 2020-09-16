@@ -130,7 +130,7 @@ const Url = memo(
 									<div class="form-group">
 										<label>URL</label>
 										<br />
-										<a href={value} target="_blank">
+										<a href={value} rel="noopener noreferrer" target="_blank">
 											{value}
 										</a>
 									</div>
