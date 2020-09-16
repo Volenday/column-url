@@ -1,6 +1,6 @@
 {
 	"name": "@volenday/column-url",
-	"version": "3.0.3",
+	"version": "3.1.0",
 	"private": false,
 	"license": "MIT",
 	"author": "Volenday <developers@volenday.com>",
@@ -48,7 +48,7 @@
 		"babel-loader": "^8.1.0",
 		"babel-plugin-react-html-attrs": "^3.0.5",
 		"ck-plugin": "^1.0.1",
-		"compression-webpack-plugin": "^5.0.2",
+		"compression-webpack-plugin": "^6.0.0",
 		"core-js": "^3.6.5",
 		"css-loader": "^4.3.0",
 		"file-loader": "^6.1.0",

@@ -46,7 +46,7 @@ const Url = memo(
 		const fileValue = GenerateThumbnail(value);
 
 		if (fileValue.type == 'video') {
-			const streamUrl = 'https://streamer.aha.volenday.com/';
+			const streamUrl = 'https://streamer.ahamatic.com/';
 			let videoUrl = value;
 			if (username != '' && password != '') {
 				videoUrl = `${streamUrl}?url=${encodeURIComponent(value)}&username=${Encode(
