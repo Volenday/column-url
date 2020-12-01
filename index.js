@@ -1,9 +1,9 @@
 import React, { memo, Suspense, useRef } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { Skeleton } from 'antd';
-import InputUrl from '@volenday/input-url';
 
 import Url from './url';
+
+const browser = typeof process.browser !== 'undefined' ? process.browser : true;
 
 export default ({
 	authentication = {
@@ -20,30 +20,34 @@ export default ({
 }) => {
 	return {
 		...defaultProps,
-		Cell: props => (
-			<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
-				<Url
-					{...props}
-					other={{
-						authentication,
-						editable,
-						id,
-						multiple: false,
-						onChange,
-						styles: { minWidth: '90%', width: '90%' }
-					}}
-				/>
-			</Suspense>
-		),
-		Filter: props => (
-			<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
-				<Filter {...props} />
-			</Suspense>
-		)
+		Cell: props =>
+			browser ? (
+				<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
+					<Url
+						{...props}
+						other={{
+							authentication,
+							editable,
+							id,
+							multiple: false,
+							onChange,
+							styles: { minWidth: '90%', width: '90%' }
+						}}
+					/>
+				</Suspense>
+			) : null,
+		Filter: props =>
+			browser ? (
+				<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
+					<Filter {...props} />s
+				</Suspense>
+			) : null
 	};
 };
 
 const Filter = memo(({ column: { filterValue, setFilter } }) => {
+	const InputUrl = require('@volenday/input-url').default;
+	const { Controller, useForm } = require('react-hook-form');
 	const { control, handleSubmit } = useForm({ defaultValues: { filter: filterValue ? filterValue : '' } });
 
 	const submit = data => setFilter(data.filter);
