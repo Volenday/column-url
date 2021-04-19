@@ -46,7 +46,7 @@ const Url = memo(
 		const fileValue = GenerateThumbnail(value);
 
 		if (fileValue.type == 'video') {
-			const streamUrl = 'https://streamer.ahamatic.com/';
+			const streamUrl = 'https://api.ahamatic.com/';
 			let videoUrl = value;
 			if (username != '' && password != '') {
 				videoUrl = `${streamUrl}?url=${encodeURIComponent(value)}&username=${Encode(
@@ -88,7 +88,12 @@ const Url = memo(
 					{!editable && multiple && (
 						<>
 							{value.split(',').map((d, i) => (
-								<a href={d} key={`${d}-${i}`} rel="noopener noreferrer" style={{ display: 'block' }} target="_blank">
+								<a
+									href={d}
+									key={`${d}-${i}`}
+									rel="noopener noreferrer"
+									style={{ display: 'block' }}
+									target="_blank">
 									{d}
 								</a>
 							))}
